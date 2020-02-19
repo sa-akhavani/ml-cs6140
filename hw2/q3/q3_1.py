@@ -36,14 +36,15 @@ def gradient_descent(X, Y, W, n, d, step_size, num_steps):
         old_W = W
         for j in range (0, d+1):
             pd = partial_deriv(X, Y, W, n, d, j)
-            W[j] = old_W[j] - step_size * partial_deriv(X, Y, W, n, d, j)
+            W[j] = old_W[j] - step_size * pd
         cst[i] = cost(X, Y, W, n, d)
     return W, cst
 
 
-def calculate_dataset_values(dset):
-    # Normalize data
-    dset = (dset - dset.mean())/dset.std()
+def calculate_dataset_values(dset, normalize=False):
+    if(normalize == True):
+        # Normalize data
+        dset = (dset - dset.mean())/dset.std()
     n = len(dset)
     d = len(dset.columns) - 1
     print(dset.head())
@@ -65,7 +66,7 @@ def load_d1():
     dset = pd.read_csv('./dset_home.csv')
     step_size = 0.0001
     num_steps = 1000
-    X, Y, W, n, d = calculate_dataset_values(dset)
+    X, Y, W, n, d = calculate_dataset_values(dset, True)
     return X, Y, W, n, d, step_size, num_steps
 
 def load_d2():
@@ -73,8 +74,32 @@ def load_d2():
     dset = pd.read_csv('./housing.csv')
     step_size = 0.0001
     num_steps = 150
+    X, Y, W, n, d = calculate_dataset_values(dset, True)
+    return X, Y, W, n, d, step_size, num_steps
+
+def load_d3():
+    # Load dataset
+    dset = pd.read_csv('./random1.csv')
+    step_size = 0.0001
+    num_steps = 1000
     X, Y, W, n, d = calculate_dataset_values(dset)
     return X, Y, W, n, d, step_size, num_steps
+
+def load_d4():
+    # Load dataset
+    dset = pd.read_csv('./random2.csv')
+    step_size = 0.0001
+    num_steps = 1000
+    X, Y, W, n, d = calculate_dataset_values(dset)
+    return X, Y, W, n, d, step_size, num_steps
+
+def load_d5():
+    # Load dataset
+    dset = pd.read_csv('./random3.csv')
+    step_size = 0.01
+    num_steps = 1000
+    X, Y, W, n, d = calculate_dataset_values(dset, True)
+    return X, Y, W, n, d, step_size, num_steps    
 
 # Uncomment Each line to load and run code for each dataset!
 X, Y, W, n, d, step_size, num_steps = load_d1()
